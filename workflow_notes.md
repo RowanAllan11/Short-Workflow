@@ -11,3 +11,18 @@
 
 1. Find a way to quantify the detection of different assemblies for calling SPIs, AMR genes, plasmids and replicons.
 2. Keep coding the SR workflow and compare different downsampled assemblies.
+
+## 📅 Date: 2025-05-16
+
+1. Add MLST to workflow potentially (helps identify genotype), however using EnteroBase and pathogen watch may be more helpful and could provide global context. Need to investigate.
+2. Okay so my thinking now is that AMR genes have to be one of the most important parts of an assembly. After curating the list of AMR genes from ABRicate, focus on the genes which are most clinically relevant. Different databases like VFDB, CARD, ResFinder give descriptions on the genes.
+Next its important to investigate gene context, is it on a chromosome or plasmid? This is where assembly quality could become very important.
+Next is alignment with reference alleles to detect variants or mutations, higher accuracy base called assemblies would be advantageous. Certain variants can alter resistance strength (pointfinder)
+Now evaluate the epidemiological significance. Compare the isolates AMR profile with publicly available genomes from similar sequences, see if your exact AMR gene variants appear in other clinical, environmental or outbreak strains. Could potentially track it to a known resistant lineage.
+(maybe pathogen watch and enterobase could be useful)
+
+## 📅 Date: 2025-05-19
+
+1. Look into using platon for identifying plasmid contigs and compare between assemblies.
+2. Also compare which assemblies are better at mapping genes to plasmid contigs.
+3. Keep testing assembler, using range of different quality reads
