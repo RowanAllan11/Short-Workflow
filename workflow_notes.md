@@ -26,3 +26,11 @@ Now evaluate the epidemiological significance. Compare the isolates AMR profile 
 1. Look into using platon for identifying plasmid contigs and compare between assemblies.
 2. Also compare which assemblies are better at mapping genes to plasmid contigs.
 3. Keep testing assembler, using range of different quality reads
+
+## 📅 Date: 2025-05-20
+
+Recap from yesterday: So platon identifies plasmid contigs like how bandage does, potentially could be useful for workflow. I also pulled the D23580 ref assembly and compared it with my own assembly from high quality D23580 fastq reads. It assembled very well demonstrating that my assembler can handle high quality reads.
+Objectives for today:
+1. Test assembler with low quality reads. Maybe have a look at a few other tools.
+2. Also test long read assembler.
+3. Look into statistical testing.
