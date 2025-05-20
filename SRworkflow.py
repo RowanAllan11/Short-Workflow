@@ -4,27 +4,36 @@ from pathlib import Path
 print("[*] Script started")
 
 # Define file paths 
-fastq_filename = "subsampled.1.fastq"
-input_reads = Path("/Users/rowanallan11/Desktop/SRworkflow/Sequences")
+forward_read = "15.fastq.gz"
+reverse_read = "25.fastq.gz"
+
+input_reads = Path("/Users/rowanallan11/Desktop/SRworkflow/Sequences/D23580strain")
 trim_dir = Path("/Users/rowanallan11/Desktop/SRworkflow/TrimmedSeq")
 output_dir = Path("/Users/rowanallan11/Desktop/SRworkflow/Output")
 trimmomatic_path = "/Users/rowanallan11/Desktop/SRworkflow/Trimmomatic/trimmomatic.jar"
 adapter_path = "/Users/rowanallan11/Desktop/SRworkflow/Trimmomatic/adapters/TruSeq3-SE.fa"
 
-fastq_file = input_reads / fastq_filename
-sample_name = fastq_file.stem
-trimmed_file = trim_dir / f"{sample_name}_trimmed.fastq"
+f_read = input_reads / forward_read
+r_read = input_reads / reverse_read
+sample_name = "D2ref"
+
+paired_f = trim_dir / f"{sample_name}_paired_f.fastq.gz"
+unpaired_f = trim_dir / f"{sample_name}_unpaired_f.fastq.gz"
+paired_r = trim_dir / f"{sample_name}_paired_r.fastq.gz"
+unpaired_r = trim_dir / f"{sample_name}_unpaired_r.fastq.gz"
 sample_output_dir = output_dir / sample_name
 
-# Check Input Exists
-if not fastq_file.exists():
-    raise FileNotFoundError(f"{fastq_file} does not exist.")
+# Check inputs
+if not f_read.exists() or not r_read.exists():
+    raise FileNotFoundError("One or both input FASTQ files are missing.")
 
 # Run Trimmomatic
 def run_trimmomatic():
     print("[*] Running Trimmomatic...")
-    cmd = ["java", "-jar", trimmomatic_path, "SE", "-phred33",
-        str(fastq_file), str(trimmed_file),
+    cmd = ["java", "-jar", trimmomatic_path, "PE", "-phred33",
+        str(f_read), str(r_read),
+        str(paired_f), str(unpaired_f),
+        str(paired_r), str(unpaired_r),
         f"ILLUMINACLIP:{adapter_path}:2:30:10",
         "LEADING:3",
         "TRAILING:3",
@@ -39,12 +48,12 @@ def run_unicycler():
     print("[*] Running Unicycler...")
     cmd = [
         "unicycler",
-        "-s", str(trimmed_file),
+        "-1", str(paired_f),
+        "-2", str(paired_r),
         "-o", str(sample_output_dir)
     ]
     subprocess.run(cmd, check=True)
     print("[✓] Assembly complete.")
-
 
 
 def run_assembly_stats():
@@ -96,8 +105,6 @@ def run_abricate_plasmidfinder():
         with open(abricate_output_file, "w") as f:
             f.write(result.stdout)
         print(f"[✓] ABRicate results saved to {abricate_output_file}")
-
-
 
 try:
     run_trimmomatic()
