@@ -34,3 +34,11 @@ Objectives for today:
 1. Test assembler with low quality reads. Maybe have a look at a few other tools.
 2. Also test long read assembler.
 3. Look into statistical testing.
+
+## 📅 Date: 2025-05-21
+
+Recap: Begun filling out an excel sheet documenting all 8 typhimurium strains including their amr gene detection, replicons and assembly stats. Benchmarking against a ST34 reference assembly
+Objectives:
+1. Begin scripting lR workflow.
+2. Test on different quality assemblies.
+3. Assemble corresponding long read sequences and document results in the excel sheet to compare.
